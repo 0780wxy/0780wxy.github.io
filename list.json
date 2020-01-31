@@ -1,0 +1,18 @@
+{
+  "fileList" : [
+    [
+      "/system/function/hello.f",
+      "file/system/function/hello.js"
+    ],
+    [
+      "/user/admin/",
+      ":folder"
+    ],
+    [
+      "/apps/edit/index.js",
+      "file/apps/edit/index.js"
+    ]
+  ],
+  "guideFile" : "file/guide.js",
+  "setupUI" : "file/setupUI.js"
+}
