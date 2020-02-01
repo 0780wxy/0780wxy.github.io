@@ -63,6 +63,9 @@
     [
       "/data/admin/con/",
       ":folder"
+    ],[
+      "/system/image/os.svg",
+      "/file/system/image/os.svg"
     ]
   ],
   "guideFile" : "file/guide.js",
