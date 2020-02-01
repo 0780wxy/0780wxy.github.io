@@ -66,6 +66,12 @@
     ],[
       "/system/image/os.svg",
       "/file/system/image/os.svg"
+    ],[
+      "/system/image/message.svg",
+      "/file/system/image/message.svg"
+    ],[
+      "/system/image/user.svg",
+      "/file/system/image/user.svg"
     ]
   ],
   "guideFile" : "file/guide.js",
