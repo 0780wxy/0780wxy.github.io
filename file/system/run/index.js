@@ -20,11 +20,28 @@ systemUI = function(){
     "background" : "rgba(0,0,0,.8)"
   }).hide();
   $(".top").html("<div class='os'>"+file.read("/system/image/os.svg")+"</div>");
+  $(".top").append("<div class='runApp'></div><div class='rightColumn'><div class='tool'></div><div class='user'><div class='userAvatar'></div><div class='userName'></div></div><div class='message'></div></div>");
   $(".top .os").css({
     "width" : os.size+"px",
     "height" : os.size+"px"
   }).click(function(){
     $(".apps").stop().fadeToggle(os.effect);
   });
+  $(".message,.userAvatar").css({
+    "width" : os.size+"px",
+    "height" : os.size+"px"
+  });
+  $(".runApp,.rightColumn,.tool,.user,.message,.userName").css({
+    "height" : os.size+"px",
+    "line-height" : os.size+"px",
+    "text-align" : "center",
+    "font-size" : Number(os.size * 0.5)+"px"
+  });
+  $(".rightColumn").css({
+    "float" : "right"
+  });
+  $(".userAvatar").html(file.read("/system/image/user.svg"));
+  $(".userName").html(userName);
+  $(".message").html(file.read("/system/image/message.svg"));
 }
 iniFun.push("systemUI");
