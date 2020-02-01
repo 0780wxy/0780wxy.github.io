@@ -5,12 +5,64 @@
       "file/system/function/hello.js"
     ],
     [
+      "/system/function/os.print.f",
+      "file/system/function/os.print.js"
+    ],
+    [
+      "/system/run/index.js",
+      "file/system/run/index.js"
+    ],
+    [
+      "/system/con/index.json",
+      "file/system/con/index.json"
+    ],
+    [
       "/user/admin/",
       ":folder"
     ],
     [
       "/apps/edit/index.js",
       "file/apps/edit/index.js"
+    ],
+    [
+      "/system/system.js",
+      "file/system/system.js"
+    ],
+    [
+      "/data/admin/background.htm",
+      "file/data/admin/background.htm"
+    ],
+    [
+      "/user/admin/文档/",
+      ":folder"
+    ],
+    [
+      "/user/admin/图片/",
+      ":folder"
+    ],
+    [
+      "/user/admin/音乐/",
+      ":folder"
+    ],
+    [
+      "/user/admin/下载/",
+      ":folder"
+    ],
+    [
+      "/user/admin/desktop/",
+      ":folder"
+    ],
+    [
+      "/data/admin/function/",
+      ":folder"
+    ],
+    [
+      "/data/admin/run/",
+      ":folder"
+    ],
+    [
+      "/data/admin/con/",
+      ":folder"
     ]
   ],
   "guideFile" : "file/guide.js",
