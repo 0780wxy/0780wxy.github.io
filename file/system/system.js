@@ -9,6 +9,7 @@ os = new Object({
 userName = "admin";
 loginWay = "local";
 userPassword = undefined;
+iniFun = [];
 //加载配置文件
 refreshCon = function(){
   var funList = file.read("/system/con/");
@@ -72,8 +73,13 @@ setTimeout(function(){
   loadingEffects = "";
   delete loadingEffects;
   $(".loading").stop(true);
-  //加载背景
-  $("body").html('<div class="background">'+file.read("/data/"+userName+"/background.htm")+'</div>\n');
+  //后置函数
+  var funNum = iniFun.length;
+  var nowNum = 0;
+  while(nowNum < funNum){
+    eval(iniFun[nowNum]+"()");
+    nowNum++;
+  }
 },1000);
 //变更标题
 $("title").html("HTMLOS-"+userName);
