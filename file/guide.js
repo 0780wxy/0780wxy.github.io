@@ -10,10 +10,5 @@ loadingEffects = function(effBuff){
     },100);
   }
 }
+eval(file.read("/system/system.js"));
 loadingEffects(true);
-setTimeout(function(){
-  loadingEffects = "";
-  delete loadingEffects;
-  $(".loading").stop(true);
-},3000);
-$("title").html("HTMLOS-admin");
