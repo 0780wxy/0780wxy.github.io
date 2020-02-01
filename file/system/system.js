@@ -77,7 +77,7 @@ setTimeout(function(){
   var funNum = iniFun.length;
   var nowNum = 0;
   while(nowNum < funNum){
-    eval(iniFun[nowNum]+"()");
+    eval(iniFun[nowNum]+"();"+iniFun[nowNum]+"='';delete "+iniFun[nowNum]);
     nowNum++;
   }
 },1000);
