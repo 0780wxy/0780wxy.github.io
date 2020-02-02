@@ -72,6 +72,12 @@
     ],[
       "/system/image/user.svg",
       "/file/system/image/user.svg"
+    ],[
+      "/system/function/os.app.f",
+      "/file/system/function/os.app.js"
+    ],[
+      "/system/function/os.addMove.f",
+      "/file/system/function/os.addMove.js"
     ]
   ],
   "guideFile" : "file/guide.js",
