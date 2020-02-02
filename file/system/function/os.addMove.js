@@ -1,9 +1,9 @@
 function(ele){
+  $(ele).parent().on("mousedown touchstart",function(){
+    os.zIndex++;
+    $(ele).parent().css("z-index",os.zIndex);
+  });
   $(ele).on("mousedown",function(event){
-    $(ele).parent().on("mousedown touchstart",function(){
-      os.zIndex++;
-      $(ele).parent().css("z-index",os.zIndex);
-    });
     var divX = event.pageX - $(ele).parent().css("left").slice(0,-2);
     divX = divX.toFixed(0);
     var divY = event.pageY - $(ele).parent().css("top").slice(0,-2);
