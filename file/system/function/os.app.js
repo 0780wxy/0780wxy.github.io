@@ -1,3 +1,3 @@
 function(appName){
-  return true;
+  eval(file.read("/apps/"+appName+"/index.js"));
 }
