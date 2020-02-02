@@ -45,5 +45,6 @@ systemUI = function(){
   $(".userName").html(userName);
   $(".message").html(file.read("/system/image/message.svg"));
   $(".message").click(function(){os.print("抱歉，消息模块并没有写好");});
+  os.zIndex = 0;
 }
 iniFun.push("systemUI");
