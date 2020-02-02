@@ -1,6 +1,6 @@
 systemUI = function(){
   //加载UI
-  $("body").html('<div class="background">'+file.read("/data/"+userName+"/background.htm")+'</div><div class="top"></div><div class="body"></div><div class="apps"></div>');
+  $("body").html('<div class="background">'+file.read("/data/"+userName+"/background.htm")+'</div><div class="body"></div><div class="apps"></div><div class="top"></div>');
   $(".top").css({
     "width" : "100%",
     "height" : os.size+"px",
@@ -35,7 +35,8 @@ systemUI = function(){
     "height" : os.size+"px",
     "line-height" : os.size+"px",
     "text-align" : "center",
-    "font-size" : Number(os.size * 0.5)+"px"
+    "font-size" : Number(os.size * 0.5)+"px",
+    "cursor" : "default"
   });
   $(".rightColumn").css({
     "float" : "right"
@@ -43,5 +44,6 @@ systemUI = function(){
   $(".userAvatar").html(file.read("/system/image/user.svg"));
   $(".userName").html(userName);
   $(".message").html(file.read("/system/image/message.svg"));
+  $(".message").click(function(){os.print("抱歉，消息模块并没有写好");});
 }
 iniFun.push("systemUI");
