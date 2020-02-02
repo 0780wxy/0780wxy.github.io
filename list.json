@@ -84,6 +84,9 @@
     ],[
       "/system/function/os.addWindow.f",
       "/file/system/function/os.addWindow.js"
+    ],[
+      "/system/function/os.maxWindow.f",
+      "/file/system/function/os.maxWindow.js"
     ]
   ],
   "guideFile" : "file/guide.js",
