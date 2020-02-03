@@ -82,6 +82,9 @@
       "/system/function/os.addMove.f",
       "/file/system/function/os.addMove.js"
     ],[
+      "/system/function/os.addSize.f",
+      "/file/system/function/os.addSize.js"
+    ],[
       "/system/function/os.addWindow.f",
       "/file/system/function/os.addWindow.js"
     ],[
