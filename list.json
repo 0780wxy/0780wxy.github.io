@@ -93,6 +93,9 @@
     ],[
       "/apps/edit/icon.svg",
       "/file/apps/edit/icon.svg"
+    ],[
+      "/apps/edit/lang.json",
+      "/file/apps/edit/lang.json"
     ]
   ],
   "guideFile" : "file/guide.js",
