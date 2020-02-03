@@ -3,7 +3,8 @@ $("title").html("HTMLOS-system");
 //加载自定义函数
 os = new Object({
   "size" : 40,
-  "effect" : 100
+  "effect" : 100,
+  "lang" : "zh_CN"
 });
 //加载变量
 userName = "admin";
