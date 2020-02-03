@@ -87,6 +87,12 @@
     ],[
       "/system/function/os.maxWindow.f",
       "/file/system/function/os.maxWindow.js"
+    ],[
+      "/apps/edit/edit.htm",
+      "/file/apps/edit/edit.htm"
+    ],[
+      "/apps/edit/icon.svg",
+      "/file/apps/edit/icon.svg"
     ]
   ],
   "guideFile" : "file/guide.js",
