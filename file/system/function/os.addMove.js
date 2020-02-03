@@ -2,6 +2,7 @@ function(ele){
   $(ele).parent().on("mousedown touchstart",function(){
     os.zIndex++;
     $(ele).parent().css("z-index",os.zIndex);
+    os.hotWindow = ele.slice(1,16);
   });
   $(ele).on("mousedown",function(event){
     var divX = event.pageX - $(ele).parent().css("left").slice(0,-2);
