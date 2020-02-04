@@ -67,6 +67,9 @@
       "/system/image/os.svg",
       "/file/system/image/os.svg"
     ],[
+      "/system/image/folderManager.svg",
+      "/file/system/image/folderManager.svg"
+    ],[
       "/system/image/message.svg",
       "/file/system/image/message.svg"
     ],[
@@ -84,6 +87,12 @@
     ],[
       "/system/function/os.addSize.f",
       "/file/system/function/os.addSize.js"
+    ],[
+      "/system/function/os.var.f",
+      "/file/system/function/os.var.js"
+    ],[
+      "/system/function/os.fileChoose.f",
+      "/file/system/function/os.fileChoose.js"
     ],[
       "/system/function/os.addWindow.f",
       "/file/system/function/os.addWindow.js"
