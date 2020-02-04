@@ -1,1 +1,24 @@
-<div>edit</div>
+<div class="bar">
+  <div onclick="">新建</div>
+  <div onclick="">打开</div>
+  <div onclick="console.log(os.var('href'));">保存</div>
+  <div onclick="os.fileChoose(function(href){alert(href);},'href');">另存为</div>
+</div>
+<script>
+  os.var("href","''");
+  $("."+os.hotWindow+" .text .bar").css({
+    "width" : "100%",
+    "height" : os.size*0.5+"px",
+    "background" : "#fff",
+    "border-bottom" : "solid 1px #eee",
+    "font-size" : os.size*0.3+"px",
+    "line-height" : os.size*0.5+"px",
+    "text-align":"center"
+  });
+  $("."+os.hotWindow+" .text .bar div").css({
+    "height" : "100%",
+    "width" : os.size*1.1+"px",
+    "cursor" : "pointer"
+  });
+  $("."+os.hotWindow+" .text").append("<div class='textarea'  style='width:100%;height:calc(100% - "+os.size*0.53+"px);'><textarea cols='1' rows='1' style='height:100%;border:none;width:100%;overflow:auto;word-break:break-all;'></textarea></div>");
+</script>
