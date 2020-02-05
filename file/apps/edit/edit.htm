@@ -1,11 +1,11 @@
 <div class="bar">
-  <div onclick="">新建</div>
-  <div onclick="">打开</div>
-  <div onclick="console.log(os.var('href'));">保存</div>
-  <div onclick="os.fileChoose(function(href){alert(href);},'href');">另存为</div>
+  <div class="new">新建</div>
+  <div class="open">打开</div>
+  <div class="save">保存</div>
+  <div class="saveAs">另存为</div>
 </div>
 <script>
-  os.var("href","''");
+  os.var("href","");
   $("."+os.hotWindow+" .text .bar").css({
     "width" : "100%",
     "height" : os.size*0.5+"px",
@@ -21,4 +21,40 @@
     "cursor" : "pointer"
   });
   $("."+os.hotWindow+" .text").append("<div class='textarea'  style='width:100%;height:calc(100% - "+os.size*0.53+"px);'><textarea cols='1' rows='1' style='height:100%;border:none;width:100%;overflow:auto;word-break:break-all;'></textarea></div>");
+  var editId = os.hotWindow;
+  $("."+os.hotWindow+" .text .bar .new").click(function(){
+    os.var("href","");
+    $("."+os.hotWindow+" .text .textarea textarea").val("");
+  });
+  $("."+os.hotWindow+" .text .bar .open").click(function(){
+    os.fileChoose(function(href){
+      var folderID = os.hotWindow;
+      os.hotWindow = editId;
+      os.var("href",href);
+      $("."+os.hotWindow+" .text .textarea textarea").val(file.read(href));
+      os.hotWindow = folderID;
+    },"file");
+  });
+  $("."+os.hotWindow+" .text .bar .save").click(function(){
+    if(os.var("href") != ""){
+      file.write(os.var("href"),$("."+os.hotWindow+" .text .textarea textarea").val());
+    }else{
+      os.fileChoose(function(href){
+        var folderID = os.hotWindow;
+        os.hotWindow = editId;
+        os.var("href",href);
+        file.write(os.var("href"),$("."+os.hotWindow+" .text .textarea textarea").val());
+        os.hotWindow = folderID;
+      },"href");
+    }
+  });
+  $("."+os.hotWindow+" .text .bar .saveAs").click(function(){
+    os.fileChoose(function(href){
+      var folderID = os.hotWindow;
+      os.hotWindow = editId;
+      os.var("href",href);
+      file.write(os.var("href"),$("."+os.hotWindow+" .text .textarea textarea").val());
+      os.hotWindow = folderID;
+    },"href");
+  });
 </script>
