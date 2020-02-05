@@ -1,0 +1,23 @@
+<div class="bar">
+  <div class="addFolder">新建文件夹</div>
+  <div class="addFile">新建文件</div>
+  <div class="choose">选择文件</div>
+</div>
+<script>
+  os.var("href","");
+  $("."+os.hotWindow+" .text .bar").css({
+    "width" : "100%",
+    "height" : os.size*0.5+"px",
+    "background" : "#fff",
+    "border-bottom" : "solid 1px #eee",
+    "font-size" : os.size*0.3+"px",
+    "line-height" : os.size*0.5+"px",
+    "text-align":"center"
+  });
+  $("."+os.hotWindow+" .text .bar div").css({
+    "height" : "100%",
+    "width" : os.size*1.7+"px",
+    "cursor" : "pointer"
+  });
+  $("."+os.hotWindow+" .text").append("<div class='allFile'  style='width:100%;height:calc(100% - "+os.size*0.53+"px);'></div>");
+</script>
