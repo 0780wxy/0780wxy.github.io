@@ -108,6 +108,18 @@
     ],[
       "/apps/edit/lang.json",
       "/file/apps/edit/lang.json"
+    ],[
+      "/apps/folderManager/lang.json",
+      "/file/apps/folderManager/lang.json"
+    ],[
+      "/apps/folderManager/icon.svg",
+      "/file/apps/folderManager/icon.svg"
+    ],[
+      "/apps/folderManager/index.js",
+      "/file/apps/folderManager/index.js"
+    ],[
+      "/apps/folderManager/ui.htm",
+      "/file/apps/folderManager/ui.htm"
     ]
   ],
   "guideFile" : "file/guide.js",
