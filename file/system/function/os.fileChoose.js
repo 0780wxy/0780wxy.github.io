@@ -17,7 +17,6 @@ function(fun = function(){},type = "file"){
   delete windowName;
   $("."+os.hotWindow+" .text").html("<div class='bar'><div class='back' style='width:"+os.size*0.75+"px;height:"+os.size*0.75+"px;text-align:center;'>←</div><div style='width:calc(100% - "+os.size*1.5+"px - 1px);height:"+os.size*0.75+"px;'><input class='href' value='/user/"+userName+"/' style='width:calc(100% - 2px);height:calc(100% - 2px);border:1px solid #eee;margin:1px;' type='text'></div><div class='ok' style='width:"+os.size*0.75+"px;height:calc("+os.size*0.75+"px - 2px);text-align:center;margin:1px 0 0;border-top:1px solid #eee;border-bottom:1px solid #eee;border-right:1px solid #eee;'>></div></div><div class='allFile' style='auto;overflow-y:auto;width:100%;height:calc(100% - "+os.size*2.28+"px);'></div><div class='bottomBar'><div style='width:100%;height:"+os.size*0.6+"px;' class='names'><div style='height:100%;width:18%;line-height:"+os.size*0.6+"px;'><p style='float:right;'>文件名</p></div><input class='name' style='width:calc(80% - 2px);height:calc(100% - 2px);border:1px solid #666;margin:1px;background:rgba(255,255,255,0);' type='text'></div><div class='bottom' style='height:"+os.size*0.7+"px;width:"+os.size*1.5+"px;background:#17f;color:#fff;border-radius:"+os.size*0.1+"px;text-align:center;float:right;margin:"+os.size*0.1+"px "+os.size*0.2+"px;;line-height:"+os.size*0.75+"px;font-size:"+os.size*0.3+"px;cursor:pointer;'>保存</div></div>");
   if(type != "href"){
-    $("."+os.hotWindow+" .text .names").html("");
     $("."+os.hotWindow+" .text .bottom").html("打开");
   }
   $("."+os.hotWindow+" .text .bar").css({
@@ -64,7 +63,9 @@ function(fun = function(){},type = "file"){
   });
   $("."+os.hotWindow+" .text .bottom").click(function(){
     if($("."+os.hotWindow+" .text .name").val() == ""){
-      $("."+os.hotWindow+" .text .name").val("未命名文件");
+      if(type != "folder"){
+        $("."+os.hotWindow+" .text .name").val("未命名文件");
+      }
     }
     fun($("."+os.hotWindow+" .text .href").val() + $("."+os.hotWindow+" .text .name").val());
     $("."+os.hotWindow+",.runIcon_"+os.hotWindow.slice(7)).remove();
