@@ -20,7 +20,7 @@ systemUI = function(){
     "background" : "rgba(0,0,0,.8)"
   }).hide();
   $(".top").html("<div class='os'>"+file.read("/system/image/os.svg")+"</div>");
-  $(".top").append("<div class='runApp'></div><div class='rightColumn'><div class='tool'></div><div class='user'><div class='userAvatar'></div><div class='userName'></div></div><div class='message'></div></div>");
+  $(".top").append("<div class='runApp'></div><div class='rightColumn'><div class='tool'></div><div class='user'><div class='userAvatar'></div><!--<div class='userName'></div>--></div><div class='message'></div></div>");
   $(".top .os").css({
     "width" : os.size+"px",
     "height" : os.size+"px"
@@ -42,7 +42,7 @@ systemUI = function(){
     "float" : "right"
   });
   $(".userAvatar").html(file.read("/system/image/user.svg"));
-  $(".userName").html(userName);
+  //$(".userName").html(userName);
   $(".message").html(file.read("/system/image/message.svg"));
   $(".message").click(function(){os.print("抱歉，消息模块并没有写好");});
   os.zIndex = 0;
