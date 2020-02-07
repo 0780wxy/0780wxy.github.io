@@ -120,6 +120,21 @@
     ],[
       "/apps/folderManager/ui.htm",
       "/file/apps/folderManager/ui.htm"
+    ],[
+      "/apps/cloudServe/lang.json",
+      "/file/apps/cloudServe/lang.json"
+    ],[
+      "/apps/cloudServe/icon.svg",
+      "/file/apps/cloudServe/icon.svg"
+    ],[
+      "/apps/cloudServe/index.js",
+      "/file/apps/cloudServe/index.js"
+    ],[
+      "/apps/cloudServe/ui.htm",
+      "/file/apps/cloudServe/ui.htm"
+    ],[
+      "/apps/cloudServe/top.svg",
+      "/file/apps/cloudServe/top.svg"
     ]
   ],
   "guideFile" : "file/guide.js",
