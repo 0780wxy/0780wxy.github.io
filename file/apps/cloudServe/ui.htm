@@ -1,0 +1,66 @@
+<script>
+  if(loginWay == "local"){
+    $("."+os.hotWindow+" .text").append('<div class="appTop" style="width:100%;position: relative;top:-'+os.size*0.75+'px;"></div>');
+    $("."+os.hotWindow+" .text").append('<div class="loginUI" style="background:#eee;width:100%;position: relative;top:-'+os.size*0.75+'px;height:'+os.size*3.46+'px;"></div>');
+    $("."+os.hotWindow+" .text .loginUI").append('<div style="width:'+os.size*8.5+'px;height:'+os.size*2+'px;margin:'+os.size*0.25+'px 0 '+os.size*0.25+'px '+os.size*2+'px;"><div style="height:'+os.size*2+'px;width:'+os.size*2+'px;">'+file.read("/system/image/user.svg")+'</div><div style="height:'+os.size*1.5+'px;width:'+os.size*6.25+'px;margin:'+os.size*0.25+'px 0 '+os.size*0.25+'px '+os.size*0.25+'px;"><input class="uid" placeholder="用户名/账号" type="text" style="width:80%;height:50%;border:1px solid #888;border-radius:5px 5px 0 0;"><div class="reg" style="height:'+os.size*0.8+'px;line-height:'+os.size*0.8+'px;font-size:'+os.size*0.25+'px;color:#0df;margin:0 0 0 '+os.size*0.1+'px;">注册账号</div><input class="password" placeholder="密码" type="password" style="width:80%;height:50%;border:1px solid #888;border-radius:0 0 5px 5px;"><div class="forget" style="height:'+os.size*0.8+'px;line-height:'+os.size*0.8+'px;font-size:'+os.size*0.25+'px;color:#0df;margin:0 0 0 '+os.size*0.1+'px;">忘记密码</div></div></div><div class="login" style="width:'+os.size*4+'px;height:'+os.size*0.8+'px;background:#0ACC59;border-radius:5px;color:#fff;margin:0 '+os.size*3.5+'px;text-align:center;line-height:'+os.size*0.8+'px;">登录</div>');
+    $("."+os.hotWindow+" .text .appTop").html(file.read("/apps/cloudServe/top.svg"));
+    $("."+os.hotWindow+" .text .login").click(function(){
+      $("."+os.hotWindow+" .text .loginUI").slideUp(os.effect*2);
+      //检测是否开启云服务
+      $.ajax({
+        type : "post",
+        url : "serve/",
+        dataType : "text",
+        cache : false,
+        success : function(text){
+          if(text == "on"){
+            if($("."+os.hotWindow+" .text .uid").val() == ""){
+              console.log("游客已登录");
+              $("."+os.hotWindow+" .conBar .off").trigger("click");
+              loginWay = "guest";
+            }else{
+              $.post("/serve/index.php",{
+                "loginWay" : "id",
+                "uid" : $("."+os.hotWindow+" .text .uid").val(),
+                "password" : $("."+os.hotWindow+" .text .password").val()
+              },function(text){
+                if(text){
+                  userName = $("."+os.hotWindow+" .text .uid").val();
+                  userPassword = $("."+os.hotWindow+" .text .password").val();
+                  loginWay = "id";
+                  console.log("已登录"+userName);
+                  $("."+os.hotWindow+" .conBar .off").trigger("click");
+                  $("body .top .user .userAvatar").html("<img src='serve/user/"+userName+"/avatar.png' style='height:100%;widt:100%;border-radius:100%;'>");
+                }else{
+                  $("."+os.hotWindow+" .text .loginUI").slideDown(os.effect*2);
+                  os.print("登陆失败");
+                }
+              },"text");
+            }
+          }else{
+            var loginV = os.hotWindow;
+            os.print("当前服务器已关闭云服务");
+            os.hotWindow = loginV;
+            $("."+os.hotWindow+" .conBar .off").trigger("click");
+          }
+        },
+        error : function(error){
+          var loginV = os.hotWindow;
+          os.print("连接错误<br>" + +error.status+" "+error.statusText);
+          os.hotWindow = loginV;
+          $("."+os.hotWindow+" .conBar .off").trigger("click");
+        }
+      });
+    });
+    $("."+os.hotWindow+" .text .uid").keyup(function(event){
+      if(event.keyCode == 13){
+        $("."+os.hotWindow+" .text .password").focus();
+      }
+    });
+    $("."+os.hotWindow+" .text .password").keyup(function(event){
+      if(event.keyCode == 13){
+        $("."+os.hotWindow+" .text .login").trigger("click");
+      }
+    });
+  }
+</script>
