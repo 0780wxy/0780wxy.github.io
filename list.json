@@ -138,6 +138,15 @@
     ],[
       "/system/function/os.webWindow.f",
       "/file/system/function/os.webWindow.js"
+    ],[
+      "/apps/updata/icon.svg",
+      "/file/apps/updata/icon.svg"
+    ],[
+      "/apps/updata/index.js",
+      "/file/apps/updata/index.js"
+    ],[
+      "/apps/updata/lang.json",
+      "/file/apps/updata/lang.json"
     ]
   ],
   "guideFile" : "file/guide.js",
