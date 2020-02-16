@@ -1,5 +1,5 @@
 //去掉注释开启调试模式
-localStorage.clear();
+//localStorage.clear();
 //检测文件列表是否存在
 localStorage.removeItem("null");
 if(localStorage.file_fileList == localStorage.null){
