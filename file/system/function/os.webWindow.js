@@ -1,207 +1,53 @@
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-        <link rel="Shortcut Icon" href="/favicon.ico" type="image/x-icon" />
-        <title></title>
-        <script src='jquery.js'></script>
-        <link rel="stylesheet" href="css.css" />
-        <script type="text/javascript">
-          var fileList = JSON.parse(localStorage.file_fileList);
-          var fileLists = JSON.stringify(fileList);
-          var file = new Object({
-            "read" : function(fileURL){
-              //文件读取
-              if(fileURL.slice(0,1) == "/"){
-                //初始分页
-                var fileUrl = fileURL;
-                fileUrl = fileUrl.slice(1);
-                if(fileUrl.slice(-1) == "/"){
-                  //文件夹
-                  fileUrl = fileUrl.slice(0,-1);
-                  fileUrl = fileUrl.replace(/\//g,'"]["?');
-                  fileUrl = 'fileList["?'+fileUrl+'"]';
-                  try{
-                    return eval(fileUrl+'["?"]');
-                  }catch(error){
-                    console.log("找不到文件夹"+fileURL+"\n"+error);
-                    return null;
-                  }
-                }else{
-                  if(fileUrl != ""){
-                    //文件
-                    var folderUrl = fileUrl.slice(0,fileUrl.lastIndexOf("/"));
-                    var fileName = fileUrl.slice(fileUrl.lastIndexOf("/")+1);
-                    folderUrl = folderUrl.replace(/\//g,'"]["?');
-                    if(folderUrl == ""){
-                      try{
-                        return localStorage.getItem("file_"+eval('fileList["'+fileName+'"]["?"]'));
-                      }catch(error){
-                        console.log("找不到文件"+fileURL+"\n"+error);
-                        return null;
-                      }
-                    }else{
-                      folderUrl = 'fileList["?'+folderUrl+'"]';
-                      try{
-                        return localStorage.getItem("file_"+eval(folderUrl+'["'+fileName+'"]["?"]'));
-                      }catch(error){
-                        console.log("找不到文件"+fileURL+"\n"+error);
-                        return null;
-                      }
-                    }
-                  }else{
-                    //直接读取根目录下的文件夹
-                    return fileList["?"];
-                  }
-                }
-              }else{
-                //其它分页
-              }
-            },
-            "write" : function(fileURL,text){
-              //文件写入
-              if(fileURL.slice(0,1) == "/"){
-                //初始分页
-                var fileUrl = fileURL;
-                fileUrl = fileUrl.slice(1);
-                if(fileUrl.slice(-1) == "/"){
-                  //文件夹
-                  if(fileUrl != "/"){
-                    var nowUrl = "fileList";
-                    while(fileUrl.indexOf("/") != -1){
-                      var folderName = fileUrl.slice(0,fileUrl.indexOf("/"));
-                      if(eval(nowUrl+"['?"+folderName+"']") == undefined){
-                        eval(nowUrl+"['?'].push('?"+folderName+"')");
-                        eval(nowUrl+"['?"+folderName+"'] = {'?':[]}");
-                      }
-                      nowUrl = nowUrl+"['?"+folderName+"']";
-                      fileUrl = fileUrl.slice(fileUrl.indexOf("/")+1);
-                    }
-                    fileLists = JSON.stringify(fileList);
-                    localStorage.file_fileList = fileLists;
-                    return true;
-                  }else{
-                    return false;
-                  }
-                }else{
-                  //文件
-                  folderUrl = fileUrl.slice(0,fileUrl.lastIndexOf("/")+1);
-                  fileName = fileUrl.slice(fileUrl.lastIndexOf("/")+1);
-                  var nowUrl = "fileList";
-                  if(folderUrl != ""){
-                    while(fileUrl.indexOf("/") != -1){
-                      var folderName = fileUrl.slice(0,fileUrl.indexOf("/"));
-                      if(eval(nowUrl+"['?"+folderName+"']") == undefined){
-                        eval(nowUrl+"['?'].push('?"+folderName+"')");
-                        eval(nowUrl+"['?"+folderName+"'] = {'?':[]}");
-                      }
-                      nowUrl = nowUrl+"['?"+folderName+"']";
-                      fileUrl = fileUrl.slice(fileUrl.indexOf("/")+1);
-                    }
-                  }
-                  //删除重复文件(如果)
-                  file.delete(fileURL);
-                  eval(nowUrl+"['?'].push('"+fileName+"')");
-                  var fileID = file.id();
-                  eval(nowUrl+"['"+fileName+"']={'?':'"+fileID+"'}");
-                  localStorage.setItem("file_"+fileID,text);
-                  fileLists = JSON.stringify(fileList);
-                  localStorage.file_fileList = fileLists;
-                  return true;
-                }
-              }else{
-                //其它分页
-              }
-            },
-            "uuid" : function(){
-              var s = [];
-              var hexDigits = "0123456789abcdef";
-              for (var i = 0; i < 36; i++) {
-                  s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
-              }
-              s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
-              s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
-              s[8] = s[13] = s[18] = s[23] = "-";
-              var uuid = s.join("");
-              return uuid;
-              //CC 4.0 BY-SA(CSDN博主「mr_raptor」,https://blog.csdn.net/mr_raptor/article/details/52280753)
-            },
-            "id" : function(){
-              var uuid = file.uuid();
-              while(localStorage.getItem("file_"+uuid) != localStorage.null){
-                alert("128位随机数字与之前发生重复，如果一瞬间多次弹出此提示框，请刷新本标签页");
-                uuid = file.uuid();
-              }
-              return uuid;
-            },
-            "delete" : function(fileURL){
-              if(fileURL.slice(0,1) == "/"){
-                //初始分页
-                var fileUrl = fileURL;
-                if(fileUrl.slice("-1") == "/"){
-                  //删文件夹
-                  fileUrl = fileUrl.slice(0,-1);
-                  fileName = fileUrl.slice(fileUrl.lastIndexOf("/")+1);
-                  fileUrl = fileUrl.slice(0,fileUrl.lastIndexOf("/")+1);
-                  //return file.read(fileURL);
-                  if(file.read(fileURL).length == 0){
-                    //空文件夹
-                    fileUrl = fileUrl.slice(1);
-                    fileUrl = 'fileList["?'+fileUrl.replace(/\//g,'"]["?');
-                    eval("delete "+fileUrl+fileName+'"]');
-                    fileUrl = fileUrl + '"]';
-                    folderObj = eval(fileUrl);
-                    folderObj.splice(folderObj.indexOf("?"+fileName),1);
-                    fileLists = JSON.stringify(fileList);
-                    localStorage.file_fileList = fileLists;
-                    return true;
-                  }else{
-                    //非空文件夹
-                    fileUrl = fileUrl.slice(1);
-                    fileUrl = 'fileList["?'+fileUrl.replace(/\//g,'"]["?');
-                    var a = 0;
-                    var b = file.read(fileURL);
-                    var c = b.length;
-                    while(0 != c){
-                      eval("file.delete('"+fileURL+b[a]+"')");
-                      c = b.length;
-                    }
-                    file.delete(fileURL);
-                  }
-                  return true;
-                }else{
-                  //删文件
-                  fileUrl = fileUrl.slice(0,fileUrl.lastIndexOf("/")+1);
-                  fileName = fileURL.slice(fileURL.lastIndexOf("/")+1);
-                  //检测文件是否存在
-                  if(file.read(fileUrl).indexOf(fileName) != -1){
-                    fileUrl = fileUrl.slice(1,-1);
-                    fileUrl = 'fileList["?'+fileUrl.replace(/\//g,'"]["?')+'"]';
-                    var fileU = eval(fileUrl+"['"+fileName+"']['?']");
-                    eval("delete "+fileUrl+"['"+fileName+"']");
-                    fileUrl = fileUrl + '["?"]';
-                    folderObj = eval(fileUrl);
-                    folderObj.splice(folderObj.indexOf(fileName),1);
-                    localStorage.removeItem("file_"+fileU);
-                    fileLists = JSON.stringify(fileList);
-                    localStorage.file_fileList = fileLists;
-                    return true;
-                  }else{
-                    return false;
-                  }
-                }
-              }else{
-                //其它分页
-              }
-            }
-          });
-        </script>
-    </head>
-    <body></body>
-    <script type="text/javascript">
-      var webURL = window.location.href;
-      webURL = webURL.slice(webURL.indexOf("#")+1);
-      $("body").html(file.read(webURL));
-    </script>
-</html>
+function(windowsInfo){
+  if(!windowsInfo){
+    return false;
+  }else{
+    if(!windowsInfo.name){windowsInfo.name="undefined";}
+    if(!windowsInfo.width){windowsInfo.width=document.body.clientWidth*0.6;}
+    if(!windowsInfo.height){windowsInfo.height=document.body.clientHeight*0.6;}
+    if(!windowsInfo.left){
+      if(!windowsInfo.X){windowsInfo.X=document.body.clientWidth*0.1;}
+      windowsInfo.left = windowsInfo.X;
+    }
+    if(!windowsInfo.top){
+      if(!windowsInfo.Y){windowsInfo.Y=document.body.clientHeight*0.1+os.size;}
+      windowsInfo.top = windowsInfo.Y;
+    }
+    if(!windowsInfo.mode){windowsInfo.mode="normal";}
+    if(!windowsInfo.id){windowsInfo.id=file.uuid().slice(0,8);}
+    if(!windowsInfo.class){windowsInfo.class="undefined";}
+    if(!windowsInfo.app){windowsInfo.app="undefined";}
+    if(!windowsInfo.icon){windowsInfo.icon="/system/image/unknown.svg";}
+    if(!windowsInfo.body){
+      windowsInfo.body="webApp.html";
+    }else if(windowsInfo.body.slice(0,1) == "#"){
+      windowsInfo.body="webApp.html"+windowsInfo.body;
+    }
+    if(!windowsInfo.type){windowsInfo.type=0x00000000;}
+    os.hotWindow = "window_"+windowsInfo.id;
+    $(".body").append("<div class='window_"+windowsInfo.id+" app_"+windowsInfo.app+" class_"+windowsInfo.class+"' style='position:fixed;top:"+windowsInfo.top+"px;left:"+windowsInfo.left+"px;width:"+windowsInfo.width+"px;height:"+windowsInfo.height+"px;background:#fff;border:1px solid #666;border-radius:"+os.size*0.1+"px;box-shadow:2px 2px 4px;'></div>");
+    $(".window_"+windowsInfo.id).html("<div class='icon' style='width:"+os.size*0.75+"px;height:"+os.size*0.75+"px;'>"+file.read(windowsInfo.icon)+"</div><div class='title' style='cursor:default;width:calc(100% - "+os.size*3+"px);height:"+os.size*0.75+"px;line-height:"+os.size*0.75+"px;font-size:"+os.size*0.3+"px;'>"+windowsInfo.name+"</div><div class='conBar' style='float:right;width:"+os.size*2.25+"px;height:"+os.size*0.75+"px;line-height:"+os.size*0.75+"px;text-align:center;font-size:"+os.size*0.5+"px;cursor:pointer;'><div class='min' style='width:"+os.size*0.75+"px;height:"+os.size*0.75+"px;' onclick='$(\".window_"+windowsInfo.id+"\").stop().fadeOut(os.effect*0.25);'>-</div><div class='max' style='width:"+os.size*0.75+"px;height:"+os.size*0.75+"px;' onclick='os.maxWindow(\""+windowsInfo.id+"\");'>❒</div><div class='off' style='width:"+os.size*0.75+"px;height:"+os.size*0.75+"px;' onclick='$(\".window_"+windowsInfo.id+",.runIcon_"+windowsInfo.id+"\").remove();'>×</div></div><iframe class='text' style='width:100%;height:calc(100% - "+os.size*0.75+"px);overflow-x:auto;overflow-y:auto;border:none;' src='"+windowsInfo.body+"'></iframe><div class='Csize' style='height:"+os.size*0.25+"px;width:"+os.size*0.25+"px;cursor:se-resize;position: relative;left:calc(100% - "+os.size*0.25+"px);bottom:"+os.size*0.25+"px;'></div>");
+    $(".top .runApp").append("<div class='runIcon_"+windowsInfo.id+" app_"+windowsInfo.app+" class_"+windowsInfo.class+"' style='width:"+os.size+"px;height:"+os.size+"px;'>"+file.read(windowsInfo.icon)+"</div>");
+    $(".top .runApp .runIcon_"+windowsInfo.id).on("mousedown touchstart",function(){
+      os.zIndex++;
+      $(".window_"+windowsInfo.id).css("z-index",os.zIndex).stop().fadeIn(os.effect*0.25);
+    });
+    os.addMove(".window_"+windowsInfo.id+" .title");
+    os.addSize(".window_"+windowsInfo.id+" .Csize","window_"+windowsInfo.id);
+    os.zIndex++;
+    $(".window_"+windowsInfo.id).css("z-index",os.zIndex);
+    eval("window_"+windowsInfo.id+"=windowsInfo");
+    if(windowsInfo.mode == "max"){
+      windowsInfo.mode = "max";
+      windowsInfo.left = $(".window_"+windowsInfo.id).css("left").slice(0,-2);
+      windowsInfo.top = $(".window_"+windowsInfo.id).css("top").slice(0,-2);
+      $(".window_"+windowsInfo.id).animate({
+        "width" : "100%",
+        "height" : document.body.clientHeight - os.size+"px",
+        "top" : os.size,
+        "left" : 0
+      },os.effect*0.25);
+    }
+    return true;
+  }
+}
