@@ -98,5 +98,9 @@ systemUI = function(){
     eval(reWindow[nowNum]+"();");
     nowNum++;
   }
+  //加载头像
+  if(localStorage.loginWay == "id"){
+    $("body .top .user .userAvatar").html("<img src='serve/infomation.php?type=avatar&uid="+userName+"' style='height:100%;widt:100%;border-radius:100%;'>");
+  }
 }
 iniFun.push("systemUI");
