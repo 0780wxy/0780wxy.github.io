@@ -1,4 +1,17 @@
 <script>
+  if(loginWay == "id"){
+    if(confirm("要登陆新账户需要注销当前账户，之前账户数据将保留，要继续吗？")){
+      userName = "admin";
+      loginWay = "local";
+      userPassword = undefined;
+      localStorage.removeItem("loginWay");
+      localStorage.removeItem("userName");
+      localStorage.removeItem("userPassword");
+      $(".userAvatar").html(file.read("/system/image/user.svg"));
+    }else{
+      setTimeout(function(){$("."+os.hotWindow+" .conBar .off").trigger("click");}, 100);
+    }
+  }
   if(loginWay == "local"){
     $("."+os.hotWindow+" .text").append('<div class="appTop" style="width:100%;position: relative;top:-'+os.size*0.75+'px;"></div>');
     $("."+os.hotWindow+" .text").append('<div class="loginUI" style="background:#eee;width:100%;position: relative;top:-'+os.size*0.75+'px;height:'+os.size*3.46+'px;"></div>');
@@ -19,23 +32,62 @@
               $("."+os.hotWindow+" .conBar .off").trigger("click");
               loginWay = "guest";
             }else{
-              $.post("/serve/index.php",{
-                "loginWay" : "id",
-                "uid" : $("."+os.hotWindow+" .text .uid").val(),
-                "password" : $("."+os.hotWindow+" .text .password").val()
-              },function(text){
-                if(text){
-                  userName = $("."+os.hotWindow+" .text .uid").val();
-                  userPassword = $("."+os.hotWindow+" .text .password").val();
-                  loginWay = "id";
-                  console.log("已登录"+userName);
-                  $("."+os.hotWindow+" .conBar .off").trigger("click");
-                  $("body .top .user .userAvatar").html("<img src='serve/user/"+userName+"/avatar.png' style='height:100%;widt:100%;border-radius:100%;'>");
+              function login(){
+                //验证身份
+                $.post("/serve/index.php",{
+                  "loginWay" : "id",
+                  "uid" : $("."+os.hotWindow+" .text .uid").val(),
+                  "password" : $("."+os.hotWindow+" .text .password").val()
+                },function(text){
+                  if(text == "true"){
+                    userName = $("."+os.hotWindow+" .text .uid").val();
+                    userPassword = $("."+os.hotWindow+" .text .password").val();
+                    loginWay = "id";
+                    console.log("已登录"+userName);
+                    $("."+os.hotWindow+" .conBar .off").trigger("click");
+                    $("body .top .user .userAvatar").html("<img src='serve/infomation.php?type=avatar&uid="+userName+"' style='height:100%;widt:100%;border-radius:100%;'>");
+                    file.write("/user/"+userName+"/文档/");
+                    file.write("/user/"+userName+"/图片/");
+                    file.write("/user/"+userName+"/音乐/");
+                    file.write("/user/"+userName+"/下载/");
+                    file.write("/user/"+userName+"/desktop/");
+                    file.write("/data/"+userName+"/function/");
+                    file.write("/data/"+userName+"/run/");
+                    file.write("/data/"+userName+"/con/");
+                    file.write("/data/"+userName+"/background.htm",file.read("/data/admin/background.htm"));
+                    localStorage.loginWay = "id";
+                    localStorage.userName = userName;
+                    localStorage.userPassword = userPassword;
+                  }else{
+                    $("."+os.hotWindow+" .text .loginUI").slideDown(os.effect*2);
+                    os.print("登陆失败");
+                  }
+                },"text");
+              }
+              if(!isNaN(Number($("."+os.hotWindow+" .text .uid").val()))){
+                login();
+              }else{
+                if(!isNaN(Number($("."+os.hotWindow+" .text .uid").val()))){
+                  login();
                 }else{
-                  $("."+os.hotWindow+" .text .loginUI").slideDown(os.effect*2);
-                  os.print("登陆失败");
+                  //将用户名转化为id
+                  $.post("/serve/userList.txt",function(text){
+                    var userLists = text;
+                    userLists = userLists.replace(/\ /g, "='");
+                    userLists = userLists.replace(/\n/g, "';userList.U");
+                    userLists = "userList.U"+userLists+"';";
+                    var userList=new Object();
+                    eval(userLists);
+                    if (eval("userList.U"+$("."+os.hotWindow+" .text .uid").val()+" == undefined")) {
+                      os.print("无效用户名");
+                      $("."+os.hotWindow+" .text .loginUI").slideDown(os.effect*2);
+                    }else{
+                      $("."+os.hotWindow+" .text .uid").val(eval("userList.U"+$("."+os.hotWindow+" .text .uid").val()))
+                      login();
+                    }
+                  },"text");
                 }
-              },"text");
+              }
             }
           }else{
             var loginV = os.hotWindow;
