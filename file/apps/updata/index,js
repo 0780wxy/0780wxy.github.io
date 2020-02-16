@@ -1,0 +1,70 @@
+if(confirm("您确定要更新吗？\n如果更新失败，您的数据将丢失。")){
+  function setup(){
+    //重置系统
+    console.log("正在获取文件列表...");
+    /*$.ajax({
+      type : "get",
+      url : "",
+      dataType : "text",
+      cache : false,
+      success : function(text){
+      }
+    });*/
+    $.ajax({
+      type : "get",
+      url : "list.json",
+      dataType : "text",
+      cache : false,
+      success : function(FL){
+        fl = JSON.parse(FL);
+        setupSuccess = function(){
+          $.ajax({
+            type : "get",
+            url : fl.guideFile,
+            dataType : "text",
+            cache : false,
+            success : function(text){
+              nowPs++;
+              progressBar(nowPs,Number(allPs+1));
+              console.log("完成，正在启动...");
+              delete fl;
+              delete nowPs;
+              delete allPs;
+              localStorage.setItem("file_guide",text);
+              eval(localStorage.getItem("file_guide"));
+            }
+          });
+        }
+        $.ajax({
+          type : "get",
+          url : fl.setupUI,
+          dataType : "text",
+          cache : false,
+          success : function(setupUI){
+            eval(setupUI);
+            allPs = fl.fileList.length;
+            nowPs = 0;
+            var nowP = 0;
+            while(nowP < allPs){
+              if(fl.fileList[nowP][1] != ":folder"){
+                eval('$.ajax({type : "get",url : "'+fl.fileList[nowP][1]+'",dataType : "text",cache : false,success : function(text){nowPs++;file.write("'+fl.fileList[nowP][0]+'",text);progressBar(nowPs,Number(allPs+1));if(nowPs == allPs){setupSuccess();}}});');
+              }else{
+                nowPs++;
+                file.write(fl.fileList[nowP][0]);
+                progressBar(nowPs,Number(allPs+1));
+              }
+              nowP++;
+            }
+          }
+        });
+      },
+      error : function(error){
+        var userChoose = window.confirm("获取文件列表失败，是否再次尝试\n错误:"+error.status+" "+error.statusText);
+        if(userChoose){
+          setup();
+        }
+      }
+    });
+  }
+  setup();
+}
