@@ -7,10 +7,22 @@ os = new Object({
   "lang" : "zh_CN"
 });
 //加载变量
+iniFun = [];
+//登陆
 userName = "admin";
 loginWay = "local";
 userPassword = undefined;
-iniFun = [];
+if(localStorage.loginWay == "id"){
+  //id登陆
+  userName = localStorage.userName;
+  loginWay = "id";
+  userPassword = localStorage.userPassword;
+}else{
+  //本地登陆
+  userName = "admin";
+  loginWay = "local";
+  userPassword = undefined;
+}
 //加载配置文件
 refreshCon = function(){
   var funList = file.read("/system/con/");
