@@ -24,7 +24,7 @@ var file = new Object({
         try{
           return eval(fileUrl+'["?"]');
         }catch(error){
-          console.log("找不到文件夹"+fileURL+"\n"+error);
+          //console.log("找不到文件夹"+fileURL+"\n"+error);
           return null;
         }
       }else{
@@ -37,7 +37,7 @@ var file = new Object({
             try{
               return localStorage.getItem("file_"+eval('fileList["'+fileName+'"]["?"]'));
             }catch(error){
-              console.log("找不到文件"+fileURL+"\n"+error);
+              //console.log("找不到文件"+fileURL+"\n"+error);
               return null;
             }
           }else{
@@ -45,7 +45,7 @@ var file = new Object({
             try{
               return localStorage.getItem("file_"+eval(folderUrl+'["'+fileName+'"]["?"]'));
             }catch(error){
-              console.log("找不到文件"+fileURL+"\n"+error);
+              //console.log("找不到文件"+fileURL+"\n"+error);
               return null;
             }
           }
@@ -223,6 +223,17 @@ function setup(){
           success : function(text){
             nowPs++;
             progressBar(nowPs,Number(allPs+1));
+            $.ajax({
+              type : "get",
+              url : "version.txt",
+              dataType : "text",
+              cache : false,
+              success : function(text){
+                var ver = text;
+                ver = ver.slice(0,ver.indexOf("\n"));
+                localStorage.setItem("osVer",ver);
+              }
+            });
             console.log("完成，正在启动...");
             delete fl;
             delete nowPs;
