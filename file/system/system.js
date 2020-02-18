@@ -1,11 +1,7 @@
 //变更标题
 $("title").html("HTMLOS-system");
 //加载自定义函数
-os = new Object({
-  "size" : 40,
-  "effect" : 100,
-  "lang" : "zh_CN"
-});
+os = new Object();
 //加载变量
 iniFun = [];
 //登陆
@@ -23,22 +19,42 @@ if(localStorage.loginWay == "id"){
   loginWay = "local";
   userPassword = undefined;
 }
-//加载配置文件
+//加载系统配置文件
+os.ini = function(fileHref,key,value){
+  //
+  if(!fileHref){
+    return null;
+  }else{
+    if(file.read(fileHref) != null){
+      if(!key){
+        var iniWork = JSON.parse(file.read(fileHref));
+        $.extend(iniWork,JSON.parse(file.read(fileHref+".con")));
+        return iniWork;
+      }else{
+        if(!value){
+          var iniWork = JSON.parse(file.read(fileHref));
+          $.extend(iniWork,JSON.parse(file.read(fileHref+".con")));
+          var keyP = key.replace(/\./g,'"]["');
+          return eval('iniWork["'+keyP+'"]');
+        }else{
+          var iniWork = JSON.parse(file.read(fileHref));
+          $.extend(iniWork,JSON.parse(file.read(fileHref+".con")));
+          var keyP = key.replace(/\./g,'"]["');
+          eval('iniWork["'+keyP+'"] = value');
+          return file.write(fileHref+".con",JSON.stringify(iniWork));
+        }
+      }
+    }else{
+      return null;
+    }
+  }
+  return "error";
+}
+//加载系统配置
 refreshCon = function(){
-  var funList = file.read("/system/con/");
-  var funNum = funList.length;
-  var nowNum = 0;
-  while(nowNum < funNum){
-    eval(funList[nowNum].slice(0,funList[nowNum].lastIndexOf("."))+"=new Object("+file.read("/system/con/"+funList[nowNum])+")");
-    nowNum++;
-  }
-  funList = file.read("/data/"+userName+"/con/");
-  funNum = funList.length;
-  nowNum = 0;
-  while(nowNum < funNum){
-    eval(funList[nowNum].slice(0,funList[nowNum].lastIndexOf("."))+"=new Object("+file.read("/data/"+userName+"/con/"+funList[nowNum])+")");
-    nowNum++;
-  }
+  os.size = os.ini("/system/con/index.json","size");
+  os.effect = os.ini("/system/con/index.json","effect");
+  os.lang = os.ini("/system/con/index.json","lang");
 }
 //加载已安装函数
 refreshFun = function(){
