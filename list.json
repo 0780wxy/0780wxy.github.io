@@ -147,6 +147,9 @@
     ],[
       "/apps/updata/lang.json",
       "/file/apps/updata/lang.json"
+    ],[
+      "/system/run/verCheck.js",
+      "file/system/run/verCheck.js"
     ]
   ],
   "guideFile" : "file/guide.js",
