@@ -26,6 +26,17 @@ if(confirm("您确定要更新吗？\n如果更新失败，您的数据将丢失
             success : function(text){
               nowPs++;
               progressBar(nowPs,Number(allPs+1));
+              $.ajax({
+                type : "get",
+                url : "version.txt",
+                dataType : "text",
+                cache : false,
+                success : function(text){
+                  var ver = text;
+                  ver = ver.slice(0,ver.indexOf("\n"));
+                  localStorage.setItem("osVer",ver);
+                }
+              });
               console.log("完成，正在启动...");
               delete fl;
               delete nowPs;
