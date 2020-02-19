@@ -1,4 +1,8 @@
-if(confirm("您确定要更新吗？\n如果更新失败，您的数据将丢失。")){
+$("body").append("<div class='updataBox' style='position:fixed;width:300px;height:200px;top:calc(50% - 100px);left:calc(50% - 150px);background:#fff;'><div class='text' style='height:150px;width:100%'>您确定要更新吗？<br>如果更新失败，您的数据将丢失。</div><div style='width:100%;height:50px;border-top:solid 1px #ccc;line-height:50px;text-align:center;'><div style='width:calc(50% - 1px);height:100%;border-right:solid 1px #ccc;' class='runUpData'>确定</div><div style='width:50%;height:100%;' onclick='$(\".updataBox\").remove();'>取消</div></div></div>");
+if(typeof verCheck!=="undefined"){
+  $(".updataBox .text").html("检测到新版本，是否更新？");
+}
+$(".updataBox .runUpData").click(function(){
   function setup(){
     //重置系统
     console.log("正在获取文件列表...");
@@ -78,4 +82,4 @@ if(confirm("您确定要更新吗？\n如果更新失败，您的数据将丢失
     });
   }
   setup();
-}
+});
