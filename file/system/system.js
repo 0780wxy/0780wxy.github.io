@@ -5,6 +5,7 @@ os = new Object();
 //加载变量
 iniFun = [];
 //登陆
+$(".loading").html("登陆");
 userName = "admin";
 loginWay = "local";
 userPassword = undefined;
@@ -52,12 +53,14 @@ os.ini = function(fileHref,key,value){
 }
 //加载系统配置
 refreshCon = function(){
+  $(".loading").html("加载配置");
   os.size = os.ini("/system/con/index.json","size");
   os.effect = os.ini("/system/con/index.json","effect");
   os.lang = os.ini("/system/con/index.json","lang");
 }
 //加载已安装函数
 refreshFun = function(){
+  $(".loading").html("加载函数");
   var funList = file.read("/system/function/");
   var funNum = funList.length;
   var nowNum = 0;
@@ -75,6 +78,7 @@ refreshFun = function(){
 }
 //执行启动项
 refreshRun = function(){
+  $(".loading").html("加载启动项");
   var funList = file.read("/system/run/");
   var funNum = funList.length;
   var nowNum = 0;
@@ -103,6 +107,7 @@ refreshAll();
   delete loadingEffects;*/
   //$(".loading").stop(true);
   //后置函数
+$(".loading").html("加载ui");
   var funNum = iniFun.length;
   var nowNum = 0;
   while(nowNum < funNum){
