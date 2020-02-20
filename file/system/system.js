@@ -97,11 +97,11 @@ refreshAll = function(){
 }
 refreshAll();
 //等待1秒
-setTimeout(function(){
+//setTimeout(function(){
   //关闭开机特效
-  loadingEffects = "";
-  delete loadingEffects;
-  $(".loading").stop(true);
+  /*loadingEffects = "";
+  delete loadingEffects;*/
+  //$(".loading").stop(true);
   //后置函数
   var funNum = iniFun.length;
   var nowNum = 0;
@@ -109,6 +109,6 @@ setTimeout(function(){
     eval(iniFun[nowNum]+"();"+iniFun[nowNum]+"='';delete "+iniFun[nowNum]);
     nowNum++;
   }
-},1000);
+//},1000);
 //变更标题
 $("title").html("HTMLOS-"+userName);
