@@ -150,6 +150,15 @@
     ],[
       "/system/run/verCheck.js",
       "file/system/run/verCheck.js"
+    ],[
+      "/apps/appstore/icon.svg",
+      "/file/apps/appstore/icon.svg"
+    ],[
+      "/apps/appstore/index.js",
+      "/file/apps/appstore/index.js"
+    ],[
+      "/apps/appstore/lang.json",
+      "/file/apps/appstore/lang.json"
     ]
   ],
   "guideFile" : "file/guide.js",
