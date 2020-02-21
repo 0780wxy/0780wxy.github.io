@@ -152,13 +152,13 @@
       "file/system/run/verCheck.js"
     ],[
       "/apps/appstore/icon.svg",
-      "/file/apps/appstore/icon.svg"
+      "/file/apps/appStore/icon.svg"
     ],[
       "/apps/appstore/index.js",
-      "/file/apps/appstore/index.js"
+      "/file/apps/appStore/index.js"
     ],[
       "/apps/appstore/lang.json",
-      "/file/apps/appstore/lang.json"
+      "/file/apps/appStore/lang.json"
     ]
   ],
   "guideFile" : "file/guide.js",
