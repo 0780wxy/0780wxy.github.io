@@ -1,0 +1,16 @@
+{
+  "time" : 2020022112381,
+  "sign" : "0780wxy",
+  "lang" : "zh_CN",
+  "home":[
+    {
+      "name":"影音娱乐",
+      "app":[
+        {
+          "name":"哔哩哔哩",
+          "url":"/serve/app/bilibili/"
+        }
+      ]
+    }
+  ]
+}
