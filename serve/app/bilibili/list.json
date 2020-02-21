@@ -1,0 +1,15 @@
+[
+	[
+		"/serve/app/bilibili/icon.svg",
+		"/apps/bilibili/icon.svg"
+	],[
+		"/serve/app/bilibili/icon2.svg",
+		"/apps/bilibili/icon2.svg"
+	],[
+		"/serve/app/bilibili/index.js",
+		"/apps/bilibili/index.js"
+	],[
+		"/serve/app/bilibili/lang.json",
+		"/apps/bilibili/lang.json"
+	]
+]
