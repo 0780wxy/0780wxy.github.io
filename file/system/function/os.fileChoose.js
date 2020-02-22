@@ -1,4 +1,10 @@
-function(fun = function(){},type = "file"){
+function(fun,type){
+  if(!fun){
+    fun = function(){};
+  }
+  if(!type){
+    type = "file";
+  }
   var windowName;
   if(type == "file"){
     windowName = "请选择文件";
@@ -27,9 +33,11 @@ function(fun = function(){},type = "file"){
     "font-size" : os.size*0.4+"px",
     "line-height" : os.size*0.75+"px",
   });
-  function dirFile(cdHref = ''){
+  function dirFile(cdHref){
+    if(!cdHref){
+      cdHref = "";
+    }
     var fileL = file.read($("."+os.hotWindow+" .text .href").val()+cdHref);
-    //$("."+os.hotWindow+" .text .allFile").html("<div onclick='"$(\"."+os.hotWindow+" .text .href\").val($(\"."+os.hotWindow+" .text .href\").val()+\""+"desktop/"+"\");$(\"."+os.hotWindow+" .text .ok\").trigger(\"click\");"'>23333</div>");
     $("."+os.hotWindow+" .text .allFile").html("");
     var allF = fileL.length;
     var nowF = 0;
