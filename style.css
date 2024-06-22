@@ -1,0 +1,169 @@
+/* 全局属性 */
+*{
+    padding: 0;
+    margin: 0;
+    float: left;
+}
+
+html,body{
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    background-color: #eee;
+}
+
+/* 默认布局 */
+#topBar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #fff;
+    line-height: 50px;
+    user-select: none;
+    font-size: 17px;
+}
+
+#title{
+    width: calc(100% - 100px);
+    margin-left: 25px;
+}
+
+#setting{
+    width: 50px;
+    padding-left: 25px;
+}
+
+
+#bottomBar{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #fff;
+    line-height: 50px;
+    user-select: none;
+    font-size: 17px;
+}
+
+#accuracy{
+    width: calc(100% - 245px);
+    margin-left: 25px;
+}
+
+#bottomBar .btn{
+    width: 70px;
+    text-align: center;
+}
+
+#bottomBar .btn.disable{
+    color:#888;
+}
+
+#bottomBar .btn#next{
+    margin-right: 10px;
+}
+
+#helloPage{
+    margin-top: 50px;
+    width: 100%;
+}
+
+#question, #choose{
+    width: 600px;
+    margin-left: calc(50% - 300px);
+    margin-top: 70px;
+}
+
+#choose{
+    user-select: none;
+    margin-top: 10px;
+    margin-bottom: 100px;
+}
+
+.fullButton:not(.select){
+    background-color: #fff;
+}
+
+
+.text{
+    width: calc(100% - 40px);
+    margin: 5px 20px;
+}
+
+.button{
+    width: calc(100% - 40px);
+    margin: 5px 20px;
+    user-select: none;
+}
+
+.button>*{
+    height: 35px;
+    line-height: 35px;
+    padding: 0 15px;
+    border-radius: 5px;
+    background-color: rgb(169, 219, 248);
+    float: right;
+}
+
+.input{
+    width: calc(100% - 60px);
+    height: 30px;
+    margin: 5px 20px;
+    padding: 0 10px;
+    background-color: rgba(0,0,0,0);
+    border-radius: 5px;
+    font-size: 15px;
+    border: 1px solid #888;
+}
+
+.fullButton{
+    width: calc(100% - 72px);
+    border-radius: 10px;
+    margin: 9px 20px;
+    padding: 5px 15px;
+    border: 1px solid #888;
+}
+
+.fullButton.select{
+    border: 1px solid rgb(28, 176, 202);
+    background-color: rgb(28, 176, 202);
+    color: #fff;
+}
+
+.fullButton.select[answer=true]{
+    border: 1px solid rgb(28, 202, 121);
+    background-color: rgb(28, 202, 121);
+    color: #fff;
+}
+
+.fullButton.select[answer=false]{
+    border: 1px solid rgb(202, 28, 28);
+    background-color: rgb(202, 28, 28);
+    color: #fff;
+}
+
+/* 小屏布局 */
+@media screen and (max-width: 600px){
+
+    #question, #choose{
+        width: calc(100% - 20px);
+        margin-left: 10px;
+    }
+
+    #question{
+        margin-bottom: 10px;
+    }
+
+    #choose{
+        margin-top: 5px;
+    }
+}
+
+
+#helloPage a{
+    width: calc(100% - 40px);
+    margin: 5px 20px;
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选择题练习</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="jquery.js"></script>
+</head>
+<body>
+    <script>
+        (function(){
+            var ua = navigator.userAgent.toLowerCase();
+            var isWeChat = ua.indexOf('micromessenger') !== -1;
+            var isQQBrowser = ua.indexOf('qq/') !== -1;
+        
+            if(isWeChat || isQQBrowser) {
+                var url = 'intent://www.example.com#Intent;scheme=http;package=com.android.chrome;end';
+                
+                window.location.href = url;
+                
+                setTimeout(function(){
+                    if (!document.webkitHidden) {
+                        $("body").html('请复制链接并在外部浏览器中打开。');
+                    }
+                }, 1000);
+            }
+        })();
+    </script>
+    <div id="topBar">
+        <div id="title">加载中...</div>
+        <div id="setting" style="display: none;">设置</div>
+    </div>
+
+    <div id="bottomBar">
+        <div id="accuracy">近-题正确率-%</div>
+        <div id="before" class="btn disable">上一题</div>
+        <div id="count" class="btn">1/1</div>
+        <div id="next" class="btn disable">下一题</div>
+    </div>
+    <div id="helloPage" style="display: none;">
+        <div class="text">选择题库以开始</div>
+        <input id="url" type="text" class="input" placeholder="题库URL">
+        <div class="button">
+            <div id="start">开始</div>
+        </div>
+        <a href="/?data/mao_20240622.json">2024毛中概</a>
+        <a href="/?data/xi_20240622.json">2024习思想</a>
+        <!-- <a href="/?data/shu_20240622.json">2024数据库</a> -->
+    </div>
+    <div id="question" style="display: none;">
+        <!-- <div class="text">这是题目</div> -->
+    </div>
+    <div id="choose" style="display: none;">
+        <!-- <div class="fullButton">这是选择</div> -->
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
