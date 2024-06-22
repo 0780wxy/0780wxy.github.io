@@ -49,12 +49,12 @@ html,body{
 }
 
 #accuracy{
-    width: calc(100% - 245px);
-    margin-left: 25px;
+    width: calc(100% - 200px);
+    margin-left: 10px;
 }
 
 #bottomBar .btn{
-    width: 70px;
+    width: 60px;
     text-align: center;
 }
 
