@@ -69,23 +69,52 @@ if (location.href.indexOf("?") == -1) {
             }
             $("#title").text(data.name);
             $("title").text("选择题练习-"+data.name);
-            //加载记录
+            // 加载记录
+            // 加载错题
             falseQuestionList = JSON.parse(localStorage.getItem(data.uuid+"-false"));
             if(falseQuestionList == null || falseQuestionList == undefined){
                 falseQuestionList = [];
+            }else{
+                // 错题除重
+                for (let i = 0; i < falseQuestionList.length; i++) {
+                    const q1 = falseQuestionList[i];
+                    for (let j = i+1; j < falseQuestionList.length; j++) {
+                        const q2 = falseQuestionList[j];
+                        if(q1 == q2){
+                            // 遇到重复，删除q2
+                            falseQuestionList = [...falseQuestionList.slice(0,j),...falseQuestionList.slice(j+1)];
+                        }
+                    }
+                }
             }
+            // 加载对题
             trueQuestionList = JSON.parse(localStorage.getItem(data.uuid+"-true"));
             if(trueQuestionList == null || trueQuestionList == undefined){
                 trueQuestionList = [];
+            }else{
+                // 对题除重
+                for (let i = 0; i < trueQuestionList.length; i++) {
+                    const q1 = trueQuestionList[i];
+                    for (let j = 0; j < falseQuestionList.length; j++) {
+                        const q2 = falseQuestionList[j];
+                        if(q1 == q2){
+                            // 遇到重复，删除q1
+                            trueQuestionList = [...trueQuestionList.slice(0,i),...trueQuestionList.slice(i+1)];
+                        }
+                    }
+                }
             }
             for (let i = 0; i < data.data.length; i++) {
                 if(falseQuestionList.indexOf(i) == -1 && trueQuestionList.indexOf(i) == -1){
                     newQuestionList.push(i);
                 }
             }
+
+            // 记录检查修复
             //开始
             addQuestion();
             loadQuestion(historyQuestion[0]);
+            loadCount();
         },
         "error": (e)=>{
             console.error(e);
@@ -160,7 +189,7 @@ $("#choose").click((e)=>{
 
 // 加载题号计数器
 function loadCount() {
-    $("#title").text(data.name+" "+trueQuestionList.length+"/"+falseQuestionList.length+"/"+(data.data.length-trueQuestionList.length-falseQuestionList.length));
+    $("#title").text(data.name+" "+trueQuestionList.length+"/"+falseQuestionList.length+"/"+newQuestionList.length);
     $("#count").text(nowPoint+1+"/"+historyQuestion.length);
     if(nowPoint == 0){
         $("#before").addClass("disable");
