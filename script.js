@@ -75,34 +75,26 @@ if (location.href.indexOf("?") == -1) {
             if(falseQuestionList == null || falseQuestionList == undefined){
                 falseQuestionList = [];
             }else{
-                // 错题除重
-                for (let i = 0; i < falseQuestionList.length; i++) {
-                    const q1 = falseQuestionList[i];
-                    for (let j = i+1; j < falseQuestionList.length; j++) {
-                        const q2 = falseQuestionList[j];
-                        if(q1 == q2){
-                            // 遇到重复，删除q2
-                            falseQuestionList = [...falseQuestionList.slice(0,j),...falseQuestionList.slice(j+1)];
-                        }
+                let nl = [];
+                for (let i = 0; i < data.data.length; i++) {
+                    if(falseQuestionList.indexOf(i) != -1){
+                        nl.push(i);
                     }
                 }
+                falseQuestionList = nl;
             }
             // 加载对题
             trueQuestionList = JSON.parse(localStorage.getItem(data.uuid+"-true"));
             if(trueQuestionList == null || trueQuestionList == undefined){
                 trueQuestionList = [];
             }else{
-                // 对题除重
-                for (let i = 0; i < trueQuestionList.length; i++) {
-                    const q1 = trueQuestionList[i];
-                    for (let j = 0; j < falseQuestionList.length; j++) {
-                        const q2 = falseQuestionList[j];
-                        if(q1 == q2){
-                            // 遇到重复，删除q1
-                            trueQuestionList = [...trueQuestionList.slice(0,i),...trueQuestionList.slice(i+1)];
-                        }
+                let nl = [];
+                for (let i = 0; i < data.data.length; i++) {
+                    if(trueQuestionList.indexOf(i) != -1 && falseQuestionList.indexOf(i) == -1){
+                        nl.push(i);
                     }
                 }
+                trueQuestionList = nl;
             }
             for (let i = 0; i < data.data.length; i++) {
                 if(falseQuestionList.indexOf(i) == -1 && trueQuestionList.indexOf(i) == -1){
@@ -145,22 +137,42 @@ $("#choose").click((e)=>{
             //检查是否选出全部正确答案
             if(userTrueCount >= allTrueCount){
                 //修改题目分类
-                if(newQuestionList.indexOf(historyQuestion[nowPoint]) != -1){
-                    newQuestionList.splice(newQuestionList.indexOf(historyQuestion[nowPoint]),1);
-                }
-                if(falseQuestionList.indexOf(historyQuestion[nowPoint]) != -1){
-                    falseQuestionList.splice(newQuestionList.indexOf(historyQuestion[nowPoint]),1);
-                }
-                if(trueQuestionList.indexOf(historyQuestion[nowPoint]) != -1){
-                    trueQuestionList.splice(newQuestionList.indexOf(historyQuestion[nowPoint]),1);
-                }
+                // if(newQuestionList.indexOf(historyQuestion[nowPoint]) != -1){
+                //     newQuestionList.splice(newQuestionList.indexOf(historyQuestion[nowPoint]),1);
+                // }
+                // if(falseQuestionList.indexOf(historyQuestion[nowPoint]) != -1){
+                //     falseQuestionList.splice(newQuestionList.indexOf(historyQuestion[nowPoint]),1);
+                // }
+                // if(trueQuestionList.indexOf(historyQuestion[nowPoint]) != -1){
+                //     trueQuestionList.splice(newQuestionList.indexOf(historyQuestion[nowPoint]),1);
+                // }
                 //更改计数器
                 answerQuestionCount++;
                 if(!nowAnswerFalse){
                     answerTrueCount++;
-                    trueQuestionList.push(historyQuestion[nowPoint]);
+                    if(trueQuestionList.indexOf(historyQuestion[nowPoint]) == -1){
+                        trueQuestionList.push(historyQuestion[nowPoint]);
+                    }
+                    let p = newQuestionList.indexOf(historyQuestion[nowPoint]);
+                    if(p != -1){
+                        newQuestionList = [...newQuestionList.slice(0,p),...newQuestionList.slice(p+1)];
+                    }
+                    p = falseQuestionList.indexOf(historyQuestion[nowPoint]);
+                    if(p != -1){
+                        falseQuestionList = [...falseQuestionList.slice(0,p),...falseQuestionList.slice(p+1)];
+                    }
                 }else{
-                    falseQuestionList.push(historyQuestion[nowPoint]);
+                    if(falseQuestionList.indexOf(historyQuestion[nowPoint]) == -1){
+                        falseQuestionList.push(historyQuestion[nowPoint]);
+                    }
+                    let p = newQuestionList.indexOf(historyQuestion[nowPoint]);
+                    if(p != -1){
+                        newQuestionList = [...newQuestionList.slice(0,p),...newQuestionList.slice(p+1)];
+                    }
+                    p = trueQuestionList.indexOf(historyQuestion[nowPoint]);
+                    if(p != -1){
+                        trueQuestionList = [...trueQuestionList.slice(0,p),...trueQuestionList.slice(p+1)];
+                    }
                 }
                 $("#accuracy").text(`近${answerQuestionCount}题正确率${Math.round((answerTrueCount/answerQuestionCount)*1000)/10}%`);
                 //保存分类
